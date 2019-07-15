@@ -29,4 +29,5 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.11' // if you use the support libraries
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
     implementation'com.android.volley:volley:1.1.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
