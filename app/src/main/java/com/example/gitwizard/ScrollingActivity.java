@@ -1,14 +1,20 @@
 package com.example.gitwizard;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,37 +45,13 @@ public class ScrollingActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 //TODO: remove hardcoded values add text boxes to allow user to enter in user and repo names.
-                String user = "JakobHartman";
-                String repo = "GitWizard";
-                getCommits(user, repo, view);
+                new CommitTask("JakobHartman", "GitWizard", view, queue,ScrollingActivity.this).execute("");
+
             }
         });
         queue = Volley.newRequestQueue(this);
-    }
-
-
-    private void getCommits(String user, String repo, final View view) {
-        String url = getString(R.string.BASE_URL) + "repos/" + user + "/" + repo + "/commits";
-        Log.i("INFO", "Connecting to : " + url);
-        final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Gson gson = new Gson();
-                Type listType = new TypeToken<ArrayList<Commit>>() {
-                }.getType();
-                List<Commit> commits = gson.fromJson(response, listType);
-                Log.i("INFO", commits.size() + " Commits Found for this repo...");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("GITAPI", error.getMessage());
-                Snackbar.make(view, "Error getting commits...", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
-            }
-        });
-        queue.add(stringRequest);
     }
 
     @Override

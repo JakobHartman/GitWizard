@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/label_committer"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:text="Committer"
+        android:textSize="36sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/static_label_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/static_label_1" />
+
+        <TextView
+            android:id="@+id/label_commit_hash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="commit_hash" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="231dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/static_label_2" />
+
+        <TextView
+            android:id="@+id/label_commit_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="commit_message" />
+    </LinearLayout>
+
+</LinearLayout>

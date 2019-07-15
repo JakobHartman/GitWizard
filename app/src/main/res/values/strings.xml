@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">GitWizard</string>
-    <string name="large_text">
-
-    </string>
     <string name="action_settings">Settings</string>
     <string name="BASE_URL">https://api.github.com/</string>
+    <string name="static_label_1">Commit Hash: </string>
+    <string name="static_label_2">Commit Message: </string>
 </resources>
