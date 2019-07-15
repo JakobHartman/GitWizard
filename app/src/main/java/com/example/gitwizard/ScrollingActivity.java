@@ -10,13 +10,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 public class ScrollingActivity extends AppCompatActivity {
 
     private static final String BASE_URL = "https://api.github.com/";
+    RequestQueue queue = Volley.newRequestQueue(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
             }
         });
-
+        queue.add(stringRequest);
     }
 
     @Override
