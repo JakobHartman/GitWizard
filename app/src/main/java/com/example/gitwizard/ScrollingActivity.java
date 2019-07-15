@@ -9,7 +9,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 public class ScrollingActivity extends AppCompatActivity {
+
+    private static final String BASE_URL = "https://api.github.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,23 @@ public class ScrollingActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+
+    private void getCommits(String user, String repo) {
+        String url = BASE_URL + "repos/" + user + "/" + repo + "/commits/";
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
     }
 
     @Override
