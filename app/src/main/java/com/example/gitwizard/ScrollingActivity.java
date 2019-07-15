@@ -19,7 +19,7 @@ import com.android.volley.toolbox.Volley;
 public class ScrollingActivity extends AppCompatActivity {
 
     private static final String BASE_URL = "https://api.github.com/";
-    RequestQueue queue = Volley.newRequestQueue(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +32,17 @@ public class ScrollingActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                String user = "JakobHartman";
+                String repo = "GitWizard";
+                getCommits(user, repo, view);
             }
         });
     }
 
 
-    private void getCommits(String user, String repo) {
-        String url = BASE_URL + "repos/" + user + "/" + repo + "/commits/";
+    private void getCommits(String user, String repo, final View view) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = BASE_URL + "repos/" + user + "/" + repo + "/branches/master";
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -49,7 +51,8 @@ public class ScrollingActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Snackbar.make(view, "Error getting commits...", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
             }
         });
         queue.add(stringRequest);
