@@ -9,8 +9,8 @@ public class Commit {
     private String url;
     private String html_url;
     private String comments_url;
-    private String author;
-    private String committer;
+    private AuthorInfo author;
+    private AuthorInfo committer;
     private List<Parent> parents;
 
     public String getSha() {
@@ -61,19 +61,11 @@ public class Commit {
         this.comments_url = comments_url;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getCommitter() {
+    public AuthorInfo getCommitter() {
         return committer;
     }
 
-    public void setCommitter(String committer) {
+    public void setCommitter(AuthorInfo committer) {
         this.committer = committer;
     }
 
@@ -83,5 +75,13 @@ public class Commit {
 
     public void setParents(List<Parent> parents) {
         this.parents = parents;
+    }
+
+    public AuthorInfo getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(AuthorInfo author) {
+        this.author = author;
     }
 }

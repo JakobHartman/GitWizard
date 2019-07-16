@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,9 +46,26 @@ public class ScrollingActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                EditText userText = findViewById(R.id.userTextField);
+                EditText repoText = findViewById(R.id.repoTextfield);
+                String user = userText.getText().toString();
+                String repo = repoText.getText().toString();
+                int count = 0;
+                if (user.isEmpty()) {
+                    Snackbar.make(view, "Please enter a github username.", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                    count++;
+                }
 
-                //TODO: remove hardcoded values add text boxes to allow user to enter in user and repo names.
-                new CommitTask("JakobHartman", "GitWizard", view, queue,ScrollingActivity.this).execute("");
+                if (repo.isEmpty()) {
+                    Snackbar.make(view, "Please enter a github repo name.", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                    count++;
+                }
+
+                if (count == 0) {
+                    new CommitTask(user, repo, view, queue, ScrollingActivity.this).execute("");
+                }
 
             }
         });

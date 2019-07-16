@@ -50,34 +50,36 @@ public class CommitTask extends AsyncTask<String, Void, String> {
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Gson gson = new Gson();
-                Type listType = new TypeToken<ArrayList<Commit>>() {
-                }.getType();
-                List<Commit> commits = gson.fromJson(response, listType);
-                Log.i("INFO", commits.size() + " Commits Found for this repo...");
-                LinearLayout scrollView = activity.findViewById(R.id.scrollview_linear_layout);
-                scrollView.removeAllViews();
+                try {
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<ArrayList<Commit>>() {
+                    }.getType();
+                    List<Commit> commits = gson.fromJson(response, listType);
+                    Log.i("INFO", commits.size() + " Commits Found for this repo...");
+                    LinearLayout scrollView = activity.findViewById(R.id.scrollview_linear_layout);
+                    scrollView.removeAllViews();
 
-                LayoutInflater vi = (LayoutInflater) activity.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                for (Commit commit : commits) {
-                    View commitView = vi.inflate(R.layout.commit_layout, null);
+                    LayoutInflater vi = (LayoutInflater) activity.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    for (Commit commit : commits) {
+                        View commitView = vi.inflate(R.layout.commit_layout, null);
 
-                    // set committer
-                    TextView committerTextView = commitView.findViewById(R.id.label_committer);
-                    committerTextView.setText(commit.getCommit().getAuthor().getName());
+                        // set committer
+                        TextView committerTextView = commitView.findViewById(R.id.label_committer);
+                        committerTextView.setText(commit.getCommit().getAuthor().getName());
 
-                    // set hash
-                    TextView hashTextView = commitView.findViewById(R.id.label_commit_hash);
-                    hashTextView.setText(commit.getSha());
+                        // set hash
+                        TextView hashTextView = commitView.findViewById(R.id.label_commit_hash);
+                        hashTextView.setText(commit.getSha());
 
-                    //set Message
-                    TextView messageTextView = commitView.findViewById(R.id.label_commit_message);
-                    messageTextView.setText(commit.getCommit().getMessage());
+                        //set Message
+                        TextView messageTextView = commitView.findViewById(R.id.label_commit_message);
+                        messageTextView.setText(commit.getCommit().getMessage());
 
-                    scrollView.addView(commitView);
+                        scrollView.addView(commitView);
+                    }
+                } catch (Exception e) {
+                    Log.e("EXCEPTION", e.getMessage());
                 }
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -88,9 +90,6 @@ public class CommitTask extends AsyncTask<String, Void, String> {
             }
         });
         queue.add(stringRequest);
-
-
-
 
 
         return null;
