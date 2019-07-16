@@ -1,7 +1,6 @@
 package com.example.gitwizard;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;

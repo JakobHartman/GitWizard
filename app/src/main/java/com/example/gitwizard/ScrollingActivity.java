@@ -1,36 +1,19 @@
 package com.example.gitwizard;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.gitwizard.model.Commit;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -40,10 +23,10 @@ public class ScrollingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,28 +35,28 @@ public class ScrollingActivity extends AppCompatActivity {
                 String user = userText.getText().toString();
                 String repo = repoText.getText().toString();
                 if (view != null) {
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+
+                    //validate inputs are not empty.
+                    int count = 0;
+                    if (user.isEmpty()) {
+                        Snackbar.make(view, "Please enter a github username.", Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null).show();
+                        count++;
+                    }
+
+                    if (repo.isEmpty()) {
+                        Snackbar.make(view, "Please enter a github repo name.", Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null).show();
+                        count++;
+                    }
+
+                    if (count == 0) {
+                        new CommitTask(user, repo, view, queue, ScrollingActivity.this).execute("");
+                    }
                 }
-
-
-                int count = 0;
-                if (user.isEmpty()) {
-                    Snackbar.make(view, "Please enter a github username.", Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
-                    count++;
-                }
-
-                if (repo.isEmpty()) {
-                    Snackbar.make(view, "Please enter a github repo name.", Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
-                    count++;
-                }
-
-                if (count == 0) {
-                    new CommitTask(user, repo, view, queue, ScrollingActivity.this).execute("");
-                }
-
             }
         });
         queue = Volley.newRequestQueue(this);
