@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -50,6 +51,12 @@ public class ScrollingActivity extends AppCompatActivity {
                 EditText repoText = findViewById(R.id.repoTextfield);
                 String user = userText.getText().toString();
                 String repo = repoText.getText().toString();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+
+
                 int count = 0;
                 if (user.isEmpty()) {
                     Snackbar.make(view, "Please enter a github username.", Snackbar.LENGTH_SHORT)

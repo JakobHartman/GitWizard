@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,9 +85,15 @@ public class CommitTask extends AsyncTask<String, Void, String> {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("GITAPI", error.getMessage());
-                Snackbar.make(view, "Error getting commits...", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+                String responseBody = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                if (responseBody.contains("Not Found")) {
+                    Snackbar.make(view, "Repo does not exist...", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                } else {
+                    Snackbar.make(view, "Error getting commits...", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                }
+                Log.e("NETERRROR", responseBody);
             }
         });
         queue.add(stringRequest);
